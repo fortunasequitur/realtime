@@ -1,0 +1,9 @@
+.profile-nav-links {
+    li {
+        a {
+            &.active {
+                @apply bg-primary-500 text-white;
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+<div class="header-area bg-white dark:bg-[#0c1427] py-[13px] px-[20px] md:px-[25px] fixed top-0 z-[6] rounded-b-md transition-all" id="header-area">
+    <div class="flex items-center justify-center md:justify-between w-full">
+        <!-- Sidebar Toggle Button -->
+        <button type="button" class="transition-all inline-flex items-center justify-center rounded-full hover:text-primary-500 focus:outline-none w-[40px] h-[40px] mr-2" (click)="toggleSidebar()">
+            <i class="material-symbols-outlined !text-[26px] md:!text-[28px]">menu</i>
+        </button>
+        <ul class="hidden md:flex items-center space-x-2 md:space-x-3">
+            <li *ngIf="isAuthenticationRoute">
+                <button type="button" class="light-dark-toggle inline-flex items-center justify-center rounded-full transition-all text-[#fe7a36] w-[40px] h-[40px] focus:outline-none" (click)="toggleTheme()">
+                    <i class="material-symbols-outlined !text-[22px] md:!text-[24px]">light_mode</i>
+                </button>
+            </li>
+            <li>
+                <a routerLink="/authentication/logout" class="inline-flex items-center justify-center rounded-full transition-all text-black dark:text-white hover:text-primary-500 w-[40px] h-[40px] focus:outline-none">
+                    <i class="material-symbols-outlined !text-[22px] md:!text-[24px]">logout</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

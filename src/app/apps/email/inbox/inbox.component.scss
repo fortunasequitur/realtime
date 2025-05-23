@@ -1,0 +1,16 @@
+.inbox-nav-links {
+    li {
+        a {
+            .custom-border {
+                @apply scale-x-0;
+            }
+            &.active {
+                @apply text-primary-500;
+
+                .custom-border {
+                    @apply scale-x-100;
+                }
+            }
+        }
+    }
+}

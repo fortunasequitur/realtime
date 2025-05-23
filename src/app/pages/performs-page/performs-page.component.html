@@ -1,0 +1,86 @@
+<!-- Breadcrumb -->
+<!-- Breadcrumb dihapus sesuai permintaan -->
+
+<!-- Filter controls: satu baris saja -->
+<div class="flex flex-row items-center gap-3 mb-4">
+    <input id="start-date" type="date" [(ngModel)]="customDateStart" class="transition-all rounded-md font-medium px-[13px] py-[6px] border border-primary-500 bg-white text-black focus:outline-none" style="color:#000;" />
+    <span class="mx-1" style="color:#fff;">-</span>
+    <input id="end-date" type="date" [(ngModel)]="customDateEnd" class="transition-all rounded-md font-medium px-[13px] py-[6px] border border-primary-500 bg-white text-black focus:outline-none" style="color:#000;" />
+    <button type="button" (click)="onLoadDateRange()" [disabled]="isLoading" class="inline-block transition-all rounded-md font-medium px-[13px] py-[6px] text-black" style="background:#86ff00; border:1px solid #86ff00; min-width:80px;">
+        <ng-container *ngIf="!isLoading; else loadingTpl">Load</ng-container>
+        <ng-template #loadingTpl>
+            <svg class="animate-spin h-5 w-5 text-black inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+        </ng-template>
+    </button>
+    <div class="trezo-card-dropdown relative ml-3">
+        <button type="button" class="trezo-card-dropdown-btn inline-block transition-all text-white hover:text-white" (click)="isDropdownOpen = !isDropdownOpen; $event.stopPropagation()" (mousedown)="$event.stopPropagation()">
+            <span class="inline-block relative ltr:pr-[17px] ltr:md:pr-[20px] rtl:pl-[17px] rtl:ml:pr-[20px]">
+                {{ getDateFilterLabel(selectedDateFilter, customDateStart) }}
+                <i class="ri-arrow-down-s-line text-lg absolute ltr:-right-[3px] rtl:-left-[3px] top-1/2 -translate-y-1/2 text-white"></i>
+            </span>
+        </button>
+        <ul *ngIf="isDropdownOpen" (click)="$event.stopPropagation()" (mousedown)="$event.stopPropagation()" class="trezo-card-dropdown-menu transition-all bg-white shadow-3xl rounded-md top-full py-[15px] absolute ltr:left-0 rtl:right-0 w-[195px] z-[5]">
+            <li *ngFor="let option of dateOptions">
+                <button type="button" class="block w-full transition-all text-black bg-white ltr:text-left rtl:text-right relative py-[8px] px-[20px] hover:bg-gray-100" (click)="selectDateFilter(option.value)">
+                    {{ option.label }}
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div *ngIf="dateRangeInvalid" class="text-danger-500 text-xs mt-1 mb-2">
+    End date must be after or equal to start date.
+</div>
+
+<!-- Summary -->
+<div class="mb-4 flex flex-wrap gap-4">
+    <div class="rounded-md px-4 py-2 font-semibold text-white">Total Conversions: {{ performsSummary.totalConversions }}</div>
+    <div class="rounded-md px-4 py-2 font-semibold text-white">Total Earnings: ${{ performsSummary.totalEarnings.toFixed(2) }}</div>
+</div>
+
+<!-- Tabel Performs -->
+<div class="trezo-card dark bg-[#0c1427] text-white mb-[25px] p-[20px] md:p-[25px] rounded-md">
+    <div class="trezo-card-header mb-[20px] md:mb-[25px] sm:flex items-center justify-between">
+        <div class="trezo-card-title">
+            <h5 class="mb-0">
+                Performs
+            </h5>
+        </div>
+    </div>
+    <div class="trezo-card-content">
+        <div class="table-responsive overflow-x-auto">
+            <table class="w-full">
+                <thead class="text-black dark:text-white">
+                    <tr>
+                        <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap">SUB ID</th>
+                        <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap">Total Conversions</th>
+                        <th class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap">Total Earnings</th>
+                    </tr>
+                </thead>
+                <tbody class="text-black dark:text-white">
+                    <tr *ngFor="let row of paginatedPerformsData">
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ row.subid }}</td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ row.totalConversions }}</td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">${{ row.totalEarnings.toFixed(2) }}</td>
+                    </tr>
+                    <tr *ngIf="paginatedPerformsData.length === 0">
+                        <td colspan="3" class="text-center py-4">No data available for this period.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination -->
+        <div *ngIf="totalPages > 1" class="flex justify-center mt-4">
+            <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+                <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="px-3 py-1 border border-gray-300 bg-white text-gray-700 rounded-l-md hover:bg-gray-100 disabled:opacity-50">&laquo;</button>
+                <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+                    <button (click)="goToPage(i + 1)" [class]="'px-3 py-1 border-t border-b border-gray-300 bg-white text-gray-700 hover:bg-gray-100 ' + (currentPage === (i + 1) ? 'font-bold bg-primary-100 text-primary-700' : '')">{{ i + 1 }}</button>
+                </ng-container>
+                <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="px-3 py-1 border border-gray-300 bg-white text-gray-700 rounded-r-md hover:bg-gray-100 disabled:opacity-50">&raquo;</button>
+            </nav>
+        </div>
+    </div>
+</div> 

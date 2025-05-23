@@ -1,0 +1,37 @@
+<div class="trezo-card dark bg-[#0c1427] text-white mb-[25px] p-[20px] md:p-[25px] rounded-md">
+    <div class="trezo-card-header mb-[20px] md:mb-[25px] flex items-center justify-between">
+        <div class="trezo-card-title">
+            <h5 class="mb-0 flex items-center">
+                <img src="assets/lottie/live.gif" alt="Live" style="width:28px; height:28px; margin-right:8px; display:inline-block; vertical-align:middle;" />
+                Live Conversions Today
+            </h5>
+        </div>
+    </div>
+    <div class="trezo-card-content">
+        <div class="table-responsive overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50 dark:bg-[#17213a] text-black dark:text-white">
+                    <tr>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">Time</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">SUB ID</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">Country</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">Payouts</th>
+                    </tr>
+                </thead>
+                <tbody class="text-black dark:text-white">
+                    <tr *ngFor="let row of conversions">
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ row.time ? (row.time.split(' ')[1] || row.time) : '' }}</td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ row.subid }}</td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
+                            <img *ngIf="row.country" [src]="'assets/flags/' + (row.country ? row.country.toLowerCase() : '') + '.svg'" class="inline-block mr-2" width="20" height="15" style="display:inline-block;vertical-align:middle;border-radius:2px;" alt="{{row.country}}">{{ row.country }}
+                        </td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">${{ row.payout }}</td>
+                    </tr>
+                    <tr *ngIf="conversions.length === 0">
+                        <td colspan="4" class="text-center py-4">No data available.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

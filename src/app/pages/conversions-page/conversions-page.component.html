@@ -1,5 +1,5 @@
 <!-- Filter controls: satu baris saja -->
-<div class="flex flex-row items-center gap-3 mb-4">
+<div class="flex flex-row items-center gap-3 mb-4 hidden md:flex">
     <input id="start-date" type="date" [(ngModel)]="customDateStart" class="transition-all rounded-md font-medium px-[13px] py-[6px] border border-primary-500 bg-white text-black focus:outline-none" style="color:#000;" />
     <span class="mx-1" style="color:#fff;">-</span>
     <input id="end-date" type="date" [(ngModel)]="customDateEnd" class="transition-all rounded-md font-medium px-[13px] py-[6px] border border-primary-500 bg-white text-black focus:outline-none" style="color:#000;" />
@@ -32,6 +32,26 @@
     End date must be after or equal to start date.
 </div>
 
+<!-- FILTER TANGGAL MOBILE -->
+<div class="md:hidden flex flex-col gap-2 mb-4">
+    <input id="start-date-mobile" type="date" [(ngModel)]="customDateStart" class="transition-all rounded-md font-medium px-[13px] py-[6px] border border-primary-500 bg-white text-black focus:outline-none" placeholder="mm/dd/yyyy" />
+    <input id="end-date-mobile" type="date" [(ngModel)]="customDateEnd" class="transition-all rounded-md font-medium px-[13px] py-[6px] border border-primary-500 bg-white text-black focus:outline-none" placeholder="mm/dd/yyyy" />
+    <button type="button" (click)="onLoadDateRange()" [disabled]="isLoading" class="inline-block transition-all rounded-md font-medium px-[13px] py-[6px] text-black" style="background:#86ff00; border:1px solid #86ff00; min-width:80px;">
+        <ng-container *ngIf="!isLoading; else loadingTplMobile">Load</ng-container>
+        <ng-template #loadingTplMobile>
+            <svg class="animate-spin h-5 w-5 text-black inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+        </ng-template>
+    </button>
+    <select [(ngModel)]="selectedDateFilter" (change)="selectDateFilter(selectedDateFilter)" class="rounded border px-2 py-1 text-black mt-2">
+        <option value="today">Today</option>
+        <option value="yesterday">Yesterday</option>
+    </select>
+</div>
+<!-- END FILTER TANGGAL MOBILE -->
+
 <!-- Summary -->
 <div class="mb-4 flex flex-wrap gap-4">
     <div class="rounded-md px-4 py-2 font-semibold text-white">Total Earning: ${{ formattedTotalEarning }}</div>
@@ -58,7 +78,9 @@
                 </thead>
                 <tbody class="text-black dark:text-white">
                     <tr *ngFor="let row of paginatedConversions">
-                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ row.time }}</td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
+                            {{ formatTime(row.time) }}
+                        </td>
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ row.subid }}</td>
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
                             <img *ngIf="row.country" [src]="'assets/flags/' + (row.country ? row.country.toLowerCase() : '') + '.svg'" class="inline-block mr-2" width="20" height="15" style="display:inline-block;vertical-align:middle;border-radius:2px;" alt="{{row.country}}">{{ row.country }}

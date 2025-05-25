@@ -14,19 +14,39 @@ import { CommonModule } from '@angular/common';
 })
 export class RecentOrdersComponent implements OnInit {
     conversions: any[] = [];
+    totalEarningToday: number = 0;
 
     constructor(private conversionsService: ConversionsService) {}
 
     ngOnInit() {
-        this.conversionsService.getAllConversions().subscribe(data => {
-            this.conversions = (data || []).slice(0, 20);
-        });
+        this.loadConversions();
         // Tambahkan interval untuk auto-refresh data
         setInterval(() => {
-            this.conversionsService.getAllConversions().subscribe(data => {
-                this.conversions = (data || []).slice(0, 20);
-            });
+            this.loadConversions();
         }, 5000); // refresh setiap 5 detik
+    }
+
+    loadConversions() {
+        this.conversionsService.getAllConversions().subscribe(data => {
+            // Filter hanya data hari ini (UTC 0)
+            const today = new Date();
+            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+            const todayStr = utcToday.toISOString().slice(0, 10);
+            const filtered = (data || []).filter(item => {
+                if (!item.time) return false;
+                // Ambil tanggal UTC dari item.time
+                const itemDateStr = item.time.slice(0, 10);
+                return itemDateStr === todayStr;
+            });
+            this.conversions = filtered.slice(0, 20);
+            this.updateTotalEarningToday();
+        });
+    }
+
+    updateTotalEarningToday() {
+        // Sudah pasti hanya data hari ini yang ada di this.conversions
+        this.totalEarningToday = this.conversions
+            .reduce((sum, item) => sum + parseFloat(item.payout || 0), 0);
     }
 
     // Card Header Menu

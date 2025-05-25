@@ -44,134 +44,6 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1, .display-6, .display-5, .d
     @apply text-4xl;
 }
 
-/** Sidebar */
-.sidebar-area {
-    @apply w-[260px] ltr:-left-full ltr:xl:left-0 rtl:-right-full rtl:xl:right-0;
-    background-color: #fff !important;
-    color: #040000 !important;
-    border: none !important;
-
-    .burger-menu {
-        @apply opacity-0 invisible;
-    }
-    .accordion {
-        .accordion-item {
-            .accordion-button {
-                &.toggle {
-                    &::before {
-                        content: "\ea6e";
-                        @apply top-1/2 -translate-y-1/2 ltr:right-[5px] rtl:left-[5px] absolute text-gray-500 dark:text-gray-400 transition-all text-[19px] font-[remixicon] mt-px;
-                    }
-                    &.open {
-                        &::before {
-                            content: "\ea4e";
-                            @apply text-black dark:text-white;
-                        }
-                    }
-                }
-                &.open, &.active {
-                    @apply bg-gray-50 dark:bg-[#15203c];
-
-                    i {
-                        @apply text-black dark:text-white;
-                    }
-                }
-                &:hover {
-                    i {
-                        @apply text-black dark:text-white;
-                    }
-                }
-            }
-            &:has(.active) .accordion-button { 
-                @apply bg-gray-50 dark:bg-[#15203c];
-
-                i {
-                    @apply text-black dark:text-white;
-                }
-            }
-            .accordion-collapse {
-                @apply hidden;
-
-                .sidebar-sub-menu {
-                    .sidemenu-item {
-                        .sidemenu-link {
-                            &::after {
-                                content: "";
-                                @apply top-1/2 -translate-y-1/2 ltr:left-[18px] rtl:right-[18px] w-[10px] h-[10px] rounded-full transition-all absolute border border-gray-500 dark:border-gray-400;
-                            }
-                            &.toggle {
-                                &::before {
-                                    content: "\ea6e";
-                                    @apply top-1/2 -translate-y-1/2 ltr:right-[13px] rtl:left-[13px] absolute text-gray-500 dark:text-gray-400 transition-all text-[19px] font-[remixicon];
-                                }
-                                &.open {
-                                    &::before {
-                                        content: "\ea4e";
-                                        @apply text-black dark:text-white;
-                                    }
-                                }
-                            }
-                            &.open, &.active {
-                                @apply bg-gray-50 text-primary-500 dark:bg-[#15203c];
-                            }
-                            &:hover {
-                                &::after {
-                                    @apply border-primary-500;
-                                }
-                                &.toggle {
-                                    &::before {
-                                        @apply text-primary-500;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                &.open {
-                    @apply block;
-                }
-            }
-        }
-    }
-    .ng-scrollbar {
-        .ng-scroll-content {
-            padding-right: 0 !important;
-        }
-        scrollbar-x {
-            display: none !important;
-        }
-    }
-    .logo {
-        background-color: #fff !important;
-        color: #040000 !important;
-    }
-    .accordion-item,
-    .accordion-button,
-    .sidebar-sub-menu,
-    .sidemenu-link {
-        background-color: transparent !important;
-        color: #040000 !important;
-    }
-    .sidemenu-link.active,
-    .sidemenu-link:hover {
-        color: #040000 !important;
-        background-color: rgba(20, 27, 35, 0.08) !important;
-    }
-    .trezo-card-title,
-    .trezo-card-subtitle {
-        color: #040000 !important;
-    }
-}
-.sidebar-hidden {
-    .sidebar-area {
-        @apply ltr:left-0 rtl:right-0 xl:ltr:-left-full xl:rtl:-right-full;
-
-        .burger-menu {
-            @apply opacity-100 visible;
-        }
-    }
-}
-
 /** Header */
 .header-area {
     @apply left-[15px] right-[15px] md:left-[25px] md:right-[25px] ltr:xl:left-[285px] rtl:xl:right-[285px];
@@ -314,7 +186,8 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1, .display-6, .display-5, .d
                         @apply w-[2px] h-[2px];
                     }
                     &::-webkit-scrollbar-track {
-                        @apply bg-white rounded-[50px] dark:bg-[#0C1427];
+                        background-color: #fff !important;
+                        @apply rounded-[50px] dark:bg-[#0C1427];
                     }
                     &::-webkit-scrollbar-thumb {
                         @apply bg-[#B5C3D7] rounded-[50px] dark:bg-[#ffffff1a];
@@ -329,7 +202,8 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1, .display-6, .display-5, .d
                 @apply w-[2px] h-[2px];
             }
             &::-webkit-scrollbar-track {
-                @apply bg-white rounded-[50px] dark:bg-[#0C1427];
+                background-color: #fff !important;
+                @apply rounded-[50px] dark:bg-[#0C1427];
             }
             &::-webkit-scrollbar-thumb {
                 @apply bg-[#B5C3D7] rounded-[50px] dark:bg-[#ffffff1a];
@@ -379,7 +253,8 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1, .display-6, .display-5, .d
 
                 .owl-dot {
                     span {
-                        @apply w-[5px] h-[5px] mt-0 mb-0 ml-0 mr-[5px] rounded-full bg-white transition-all;
+                        @apply w-[5px] h-[5px] mt-0 mb-0 ml-0 mr-[5px] rounded-full transition-all;
+                        background-color: #fff !important;
                     }
                     &:hover, &.active {
                         span {
@@ -396,7 +271,8 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1, .display-6, .display-5, .d
                 @apply md:absolute mt-[17px] md:mt-0 md:-right-[2px] md:-top-[46px] lg:-top-[51px];
 
                 [class*=owl-] {
-                    @apply p-0 w-[31px] h-[31px] my-0 mx-[2px] text-[22px] leading-[29px] text-gray-500 dark:text-gray-400 bg-white dark:bg-[#0c1427] border border-gray-100 dark:border-[#172036];
+                    @apply p-0 w-[31px] h-[31px] my-0 mx-[2px] text-[22px] leading-[29px] text-gray-500 dark:text-gray-400 dark:bg-[#0c1427] border border-gray-100 dark:border-[#172036];
+                    background-color: #fff !important;
                     
                     &:hover {
                         @apply bg-primary-500 border-primary-500 text-white;
@@ -462,56 +338,6 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1, .display-6, .display-5, .d
 
 /** Apexcharts */
 html[dir="rtl"] {
-    .sidebar-area {
-        .accordion {
-            .accordion-item {
-                .accordion-button {
-                    &.toggle {
-                        &::before {
-                            content: "\ea64";
-                        }
-                        &.open {
-                            &::before {
-                                content: "\ea4e";
-                            }
-                        }
-                    }
-                }
-                .accordion-collapse {
-                    .sidebar-sub-menu {
-                        .sidemenu-item {
-                            .sidemenu-link {
-                                &.toggle {
-                                    &::before {
-                                        content: "\ea64";
-                                    }
-                                    &.open {
-                                        &::before {
-                                            content: "\ea4e";
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .ng-scrollbar {
-            width: 100% !important;
-            direction: rtl;
-
-            .ng-scroll-content {
-                @apply p-0;
-                direction: rtl;
-                width: 100% !important;
-
-                .ng-scrollbar-sticky {
-                    @apply left-0 right-auto;
-                }
-            }
-        }
-    }
     .header-area {
         .settings-menu {
             .rtl-mode-toggle {
@@ -585,7 +411,8 @@ html[dir="rtl"] {
             @apply font-body;
         }
         &.apexcharts-theme-light {
-            @apply rounded-md border border-gray-100 bg-white shadow-3xl dark:bg-[#172036] dark:border-[#172036] dark:shadow-none;
+            @apply rounded-md border border-gray-100 shadow-3xl dark:bg-[#172036] dark:border-[#172036] dark:shadow-none;
+            background-color: #fff !important;
 
             .apexcharts-tooltip-title {
                 @apply py-[9px] px-[12px] mb-[5px] bg-gray-50 text-black rounded-t-md text-sm font-semibold border-b-0 border-gray-100 dark:bg-[#0C1427] dark:text-white;
@@ -593,7 +420,8 @@ html[dir="rtl"] {
         }
         &.apexcharts-theme-dark {
             .apexcharts-tooltip-series-group {
-                @apply bg-white dark:bg-black;
+                background-color: #fff !important;
+                @apply dark:bg-black;
             }
         }
     }
@@ -611,7 +439,8 @@ html[dir="rtl"] {
         }
     }
     .apexcharts-xaxistooltip {
-        @apply border-0 -mt-[1px] text-black bg-white shadow-3xl dark:text-white dark:bg-[#15203c] dark:shadow-none;
+        @apply border-0 -mt-[1px] text-black shadow-3xl dark:text-white dark:bg-[#15203c] dark:shadow-none;
+        background-color: #fff !important;
 
         .apexcharts-xaxistooltip-text {
             @apply font-body text-sm font-semibold;
@@ -638,7 +467,8 @@ html[dir="rtl"] {
         }
     }
     .apexcharts-menu {
-        @apply p-[5px] min-w-[125px] text-left rounded-md border border-gray-100 bg-white shadow-3xl dark:shadow-none dark:bg-[#172036] dark:border-[#172036];
+        @apply p-[5px] min-w-[125px] text-left rounded-md border border-gray-100 shadow-3xl dark:shadow-none dark:bg-[#172036] dark:border-[#172036];
+        background-color: #fff !important;
 
         .apexcharts-menu-item {
             @apply transition-all rounded-[3px] px-[8px] py-[5px] text-sm;
@@ -815,7 +645,8 @@ html[dir="rtl"] {
             @apply text-lg;
         }
         .fc-today-button {
-            @apply transition-all capitalize text-primary-500 border-0 ltr:mr-[10px] rtl:ml-[10px] shadow-none h-auto p-0 bg-white dark:bg-[#0c1427];
+            @apply transition-all capitalize text-primary-500 border-0 ltr:mr-[10px] rtl:ml-[10px] shadow-none h-auto p-0 dark:bg-[#0c1427];
+            background-color: #fff !important;
 
             &:disabled {
                 @apply text-gray-500 dark:text-gray-400 opacity-50;
@@ -825,7 +656,8 @@ html[dir="rtl"] {
             @apply ltr:ml-[12px] rtl:ml-0 rtl:mr-[12px];
 
             .fc-button {
-                @apply p-0 w-[35px] h-[35px] shadow-none rounded-sm inline-block text-black dark:text-white bg-white dark:bg-[#0c1427] transition-all border border-gray-100 dark:border-[#172036] hover:bg-primary-500 hover:border-primary-500 hover:text-white mx-[5px] ltr:first:ml-0 rtl:first:mr-0 ltr:last:mr-0 rtl:last:ml-0;
+                @apply p-0 w-[35px] h-[35px] shadow-none rounded-sm inline-block text-black dark:text-white transition-all border border-gray-100 dark:border-[#172036] hover:bg-primary-500 hover:border-primary-500 hover:text-white mx-[5px] ltr:first:ml-0 rtl:first:mr-0 ltr:last:mr-0 rtl:last:ml-0;
+                background-color: #fff !important;
                 
                 .fc-icon {
                     @apply rtl:-scale-x-[1];
@@ -898,7 +730,8 @@ html[dir="rtl"] {
             @apply bg-primary-50 dark:bg-[#15203c] border-0 rounded-t-md;
         }
         .NgxEditor {
-            @apply bg-white dark:bg-[#0c1427] text-black dark:text-white;
+            @apply dark:bg-[#0c1427] text-black dark:text-white;
+            background-color: #fff !important;
         }
         .NgxEditor__MenuItem {
             .NgxEditor__MenuItem--Icon {
@@ -931,7 +764,8 @@ html[dir="rtl"] {
             }
             &.active {
                 .nav-link {
-                    @apply bg-white text-black dark:text-white dark:bg-[#15203c];
+                    @apply text-black dark:text-white dark:bg-[#15203c];
+                    background-color: #fff !important;
 
                     &::before {
                         @apply opacity-100;
@@ -967,7 +801,8 @@ html[dir="rtl"] {
 /** Front Page Navbar */
 #navbar {
     &.is-sticky {
-        @apply z-[999] bg-white dark:bg-dark;
+        @apply z-[999] dark:bg-dark;
+        background-color: #fff !important;
     }
     #navbar-burger-menu {
         &.active {
@@ -1032,25 +867,6 @@ html[dir="rtl"] {
 
 /** Sidebar Toggle Patch */
 @media (max-width: 768px) {
-  .sidebar-area {
-    left: 0 !important;
-    right: 0 !important;
-    top: 0 !important;
-    width: 100vw !important;
-    height: 50vh !important;
-    border-radius: 0 0 20px 20px !important;
-    transform: translateY(-100%) !important;
-    transition: transform 0.3s !important;
-  }
-  body:not(.sidebar-hidden) .sidebar-area {
-    transform: translateY(0) !important;
-  }
-  body.sidebar-hidden .sidebar-area {
-    transform: translateY(-100%) !important;
-  }
-  .header-area {
-    background-color: #fff !important;
-  }
   .olivia-congrats-mobile {
     background: #86ff00 !important;
     border: none !important;
@@ -1075,13 +891,20 @@ html[dir="rtl"] {
     border: none !important;
     box-shadow: none !important;
   }
+  .main-content > .bg-white,
+  .main-content > .trezo-card,
+  .trezo-card.bg-white {
+    background: #19191b !important;
+  }
+  .trezo-card.bg-white {
+    display: none !important;
+  }
 }
 
 .dark, .dark body, .dark html {
   background-color: #19191b !important;
 }
 .dark .trezo-card,
-.dark .sidebar-area,
 .dark .welcome-card,
 .dark .bg-primary-500,
 .dark .bg-primary-500\/80,

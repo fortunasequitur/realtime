@@ -2,6 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { NgIf, NgFor, JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { TicketsResolvedComponent } from '../../dashboard/helpdesk/tickets-resolved/tickets-resolved.component';
 import { TicketsInProgressComponent } from '../../dashboard/helpdesk/tickets-in-progress/tickets-in-progress.component';
 import { TicketsDueComponent } from '../../dashboard/helpdesk/tickets-due/tickets-due.component';
@@ -11,7 +12,7 @@ import { ConversionsService } from './conversions.service';
 @Component({
     selector: 'app-conversions-page',
     standalone: true,
-    imports: [RouterLink, NgIf, NgFor, JsonPipe, FormsModule, TicketsResolvedComponent, TicketsInProgressComponent, TicketsDueComponent, TicketsNewOpenComponent],
+    imports: [RouterLink, NgIf, NgFor, JsonPipe, FormsModule, TicketsResolvedComponent, TicketsInProgressComponent, TicketsDueComponent, TicketsNewOpenComponent, CommonModule],
     templateUrl: './conversions-page.component.html',
     styleUrl: './conversions-page.component.scss'
 })
@@ -177,5 +178,14 @@ export class ConversionsPageComponent {
 
     toggleClass() {
         this.classApplied = !this.classApplied;
+    }
+
+    formatTime(rowTime: string): string {
+        if (!rowTime) return '';
+        const [date, time] = rowTime.split(' ');
+        if (!date || !time) return rowTime;
+        const [year, month, day] = date.split('-');
+        if (!year || !month || !day) return rowTime;
+        return `${day}/${month}/${year.slice(2)} - ${time.slice(0,5)}`;
     }
 } 

@@ -1,6 +1,25 @@
-<div class="header-area bg-white dark:bg-[#0c1427] py-[13px] px-0 md:px-0 fixed top-0 z-[6] rounded-b-md transition-all" id="header-area">
+<div class="header-area bg-white dark:bg-[#0c1427] py-[13px] px-0 md:px-0 fixed top-0 z-[6] rounded-b-md transition-all" id="header-area" style="z-index:9999;">
     <div class="w-full max-w-7xl mx-auto px-6">
-        <div class="flex items-center justify-between w-full">
+        <!-- MOBILE HEADER: hanya tampil di mobile (md:hidden) -->
+        <div class="flex flex-col items-center justify-center md:hidden py-2 w-full">
+            <span class="font-bold uppercase text-white text-2xl tracking-wide select-none text-center">GILANG TEAM</span>
+            <div class="flex justify-center items-center gap-2 mt-2 w-full">
+                <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                   class="menu-header-link flex-1 text-center rounded-md transition-all font-medium text-white dark:text-white hover:text-[#f37a37] px-2 py-2 focus:outline-none text-xs">
+                    Live Reports
+                </a>
+                <a routerLink="/dashboard/conversions" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                   class="menu-header-link flex-1 text-center rounded-md transition-all font-medium text-white dark:text-white hover:text-[#f37a37] px-2 py-2 focus:outline-none text-xs">
+                    Conversions
+                </a>
+                <a routerLink="/dashboard/performs" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                   class="menu-header-link flex-1 text-center rounded-md transition-all font-medium text-white dark:text-white hover:text-[#f37a37] px-2 py-2 focus:outline-none text-xs">
+                    Performs
+                </a>
+            </div>
+        </div>
+        <!-- DESKTOP HEADER: hanya tampil di md ke atas -->
+        <div class="flex items-center justify-between w-full hidden md:flex">
             <!-- Kiri: Logo -->
             <div class="flex items-center min-w-[180px]">
                 <span class="font-bold uppercase text-white text-2xl tracking-wide select-none">GILANG TEAM</span>
@@ -26,8 +45,8 @@
                     </a>
                 </li>
             </ul>
-            <!-- Kanan: Logout -->
-            <div class="flex items-center min-w-[60px] justify-end">
+            <!-- Kanan: Logout (hanya tampil di md ke atas) -->
+            <div class="hidden md:flex items-center min-w-[60px] justify-end">
                 <a routerLink="/authentication/logout" class="inline-flex items-center justify-center rounded-full transition-all text-black dark:text-white hover:text-primary-500 w-[40px] h-[40px] focus:outline-none">
                     <i class="material-symbols-outlined !text-[22px] md:!text-[24px]">logout</i>
                 </a>

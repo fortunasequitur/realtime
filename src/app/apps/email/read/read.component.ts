@@ -1,12 +1,11 @@
 import { Component, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-read',
     standalone: true,
-    imports: [RouterLink, SidebarComponent, NgIf],
+    imports: [RouterLink, NgIf],
     templateUrl: './read.component.html',
     styleUrl: './read.component.scss'
 })

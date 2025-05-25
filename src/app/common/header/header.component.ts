@@ -3,11 +3,12 @@ import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { ToggleService } from './toggle.service';
 import { CommonModule } from '@angular/common';
+import { RouterLinkActive } from '@angular/router';
 
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [CommonModule, RouterLink],
+    imports: [CommonModule, RouterLink, RouterLinkActive],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })

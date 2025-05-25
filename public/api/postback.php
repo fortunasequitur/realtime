@@ -13,7 +13,7 @@ if (!$network || !$subid || !$payout || !$country) {
     exit;
 }
 
-$conn = new mysqli('localhost', 'lazfsvyj_realtime', '@Wisnudinar21', 'lazfsvyj_realtime');
+$conn = new mysqli('localhost', 'sobf5627_gilang', '@Gilang123', 'sobf5627_realtimegilang');
 if ($conn->connect_error) {
     echo json_encode(['error' => 'Database connection failed']);
     exit;

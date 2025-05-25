@@ -2,12 +2,11 @@ import { isPlatformBrowser, NgIf } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgxEditorModule, Editor, Toolbar } from 'ngx-editor';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
     selector: 'app-compose',
     standalone: true,
-    imports: [RouterLink, SidebarComponent, NgIf, NgxEditorModule],
+    imports: [RouterLink, NgIf, NgxEditorModule],
     templateUrl: './compose.component.html',
     styleUrl: './compose.component.scss'
 })

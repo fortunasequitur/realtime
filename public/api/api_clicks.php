@@ -5,7 +5,7 @@ header('Access-Control-Allow-Methods: GET, POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 // Koneksi ke database
-$conn = new mysqli('localhost', 'lazfsvyj_realtime', '@Wisnudinar21', 'lazfsvyj_realtime');
+$conn = new mysqli('localhost', 'sobf5627_gilang', '@Gilang123', 'sobf5627_realtimegilang');
 if ($conn->connect_error) {
     die(json_encode(['error' => 'Database connection failed', 'detail' => $conn->connect_error]));
 }

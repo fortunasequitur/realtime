@@ -1132,3 +1132,9 @@ html[dir="rtl"] {
   background-color: #86ff00 !important;
   color: #040000 !important;
 }
+
+/* Override hover color for header menu links */
+.header-area .menu-header-link:hover {
+  background-color: #f37a37 !important;
+  color: #fff !important;
+}

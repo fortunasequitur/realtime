@@ -146,23 +146,25 @@ export class StatisticsPageComponent {
         let start = '';
         let end = '';
         if (value === 'today') {
-            start = end = today.toISOString().slice(0, 10);
+            // UTC+0
+            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+            start = end = utcToday.toISOString().slice(0, 10);
         } else if (value === 'yesterday') {
-            const yest = new Date(today);
-            yest.setDate(today.getDate() - 1);
-            start = end = yest.toISOString().slice(0, 10);
+            const utcYesterday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1));
+            start = end = utcYesterday.toISOString().slice(0, 10);
         } else if (value === 'last7') {
-            const last7 = new Date(today);
-            last7.setDate(today.getDate() - 6);
-            start = last7.toISOString().slice(0, 10);
-            end = today.toISOString().slice(0, 10);
+            const utcLast7 = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 6));
+            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+            start = utcLast7.toISOString().slice(0, 10);
+            end = utcToday.toISOString().slice(0, 10);
         } else if (value === 'thisMonth') {
-            const first = new Date(today.getFullYear(), today.getMonth(), 1);
+            const first = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1));
+            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
             start = first.toISOString().slice(0, 10);
-            end = today.toISOString().slice(0, 10);
+            end = utcToday.toISOString().slice(0, 10);
         } else if (value === 'lastMonth') {
-            const first = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-            const last = new Date(today.getFullYear(), today.getMonth(), 0);
+            const first = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1));
+            const last = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 0));
             start = first.toISOString().slice(0, 10);
             end = last.toISOString().slice(0, 10);
         }
@@ -176,8 +178,10 @@ export class StatisticsPageComponent {
     filterDataByDateRange(start: string, end: string) {
         const filtered = this.allClicks.filter(click => {
             if (!click.timestamp) return false;
+            // Pastikan parsing dan perbandingan dalam UTC+0
             const clickDate = new Date(click.timestamp.replace(' ', 'T'));
-            return clickDate >= new Date(start + 'T00:00:00') && clickDate <= new Date(end + 'T23:59:59');
+            const clickDateUTC = new Date(Date.UTC(clickDate.getUTCFullYear(), clickDate.getUTCMonth(), clickDate.getUTCDate()));
+            return clickDateUTC >= new Date(start + 'T00:00:00Z') && clickDateUTC <= new Date(end + 'T23:59:59Z');
         });
         this.updateStatisticsFromFilteredClicks(filtered);
     }

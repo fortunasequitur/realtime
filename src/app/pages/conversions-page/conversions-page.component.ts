@@ -56,6 +56,9 @@ export class ConversionsPageComponent {
             return acc;
         }, { clicks: 0, earning: 0 });
     }
+    get formattedTotalEarning() {
+        return this.statisticsSummary.earning.toFixed(2);
+    }
 
     constructor(private router: Router, private conversionsService: ConversionsService) {
         this.router.events.subscribe(() => {
@@ -78,23 +81,25 @@ export class ConversionsPageComponent {
         let end = '';
         const today = new Date();
         if (this.selectedDateFilter === 'today') {
-            start = end = today.toISOString().slice(0, 10);
+            // UTC+0
+            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+            start = end = utcToday.toISOString().slice(0, 10);
         } else if (this.selectedDateFilter === 'yesterday') {
-            const yest = new Date(today);
-            yest.setDate(today.getDate() - 1);
-            start = end = yest.toISOString().slice(0, 10);
+            const utcYesterday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1));
+            start = end = utcYesterday.toISOString().slice(0, 10);
         } else if (this.selectedDateFilter === 'last7') {
-            const last7 = new Date(today);
-            last7.setDate(today.getDate() - 6);
-            start = last7.toISOString().slice(0, 10);
-            end = today.toISOString().slice(0, 10);
+            const utcLast7 = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 6));
+            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+            start = utcLast7.toISOString().slice(0, 10);
+            end = utcToday.toISOString().slice(0, 10);
         } else if (this.selectedDateFilter === 'thisMonth') {
-            const first = new Date(today.getFullYear(), today.getMonth(), 1);
+            const first = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1));
+            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
             start = first.toISOString().slice(0, 10);
-            end = today.toISOString().slice(0, 10);
+            end = utcToday.toISOString().slice(0, 10);
         } else if (this.selectedDateFilter === 'lastMonth') {
-            const first = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-            const last = new Date(today.getFullYear(), today.getMonth(), 0);
+            const first = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1));
+            const last = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 0));
             start = first.toISOString().slice(0, 10);
             end = last.toISOString().slice(0, 10);
         }

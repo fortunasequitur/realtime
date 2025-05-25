@@ -3,9 +3,9 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 $pdo = new PDO(
-    'mysql:host=localhost;dbname=lazfsvyj_realtime',
-    'lazfsvyj_realtime',
-    '@Wisnudinar21',
+    'mysql:host=localhost;dbname=sobf5627_realtimegilang',
+    'sobf5627_gilang',
+    '@Gilang123',
     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
 );
 $date = $_GET['date'] ?? date('Y-m-d');

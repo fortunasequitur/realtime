@@ -1,20 +1,37 @@
-<div class="header-area bg-white dark:bg-[#0c1427] py-[13px] px-[20px] md:px-[25px] fixed top-0 z-[6] rounded-b-md transition-all" id="header-area">
-    <div class="flex items-center justify-center md:justify-between w-full">
-        <!-- Sidebar Toggle Button -->
-        <button type="button" class="transition-all inline-flex items-center justify-center rounded-full hover:text-primary-500 focus:outline-none w-[40px] h-[40px] mr-2" (click)="toggleSidebar()">
-            <i class="material-symbols-outlined !text-[26px] md:!text-[28px]">menu</i>
-        </button>
-        <ul class="hidden md:flex items-center space-x-2 md:space-x-3">
-            <li *ngIf="isAuthenticationRoute">
-                <button type="button" class="light-dark-toggle inline-flex items-center justify-center rounded-full transition-all text-[#fe7a36] w-[40px] h-[40px] focus:outline-none" (click)="toggleTheme()">
-                    <i class="material-symbols-outlined !text-[22px] md:!text-[24px]">light_mode</i>
-                </button>
-            </li>
-            <li>
+<div class="header-area bg-white dark:bg-[#0c1427] py-[13px] px-0 md:px-0 fixed top-0 z-[6] rounded-b-md transition-all" id="header-area">
+    <div class="w-full max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between w-full">
+            <!-- Kiri: Logo -->
+            <div class="flex items-center min-w-[180px]">
+                <span class="font-bold uppercase text-white text-2xl tracking-wide select-none">GILANG TEAM</span>
+            </div>
+            <!-- Tengah: Menu -->
+            <ul class="flex-1 flex justify-center items-center space-x-2 md:space-x-3">
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                       class="menu-header-link inline-flex items-center justify-center rounded-md transition-all font-medium text-white dark:text-white hover:text-[#f37a37] px-3 py-2 focus:outline-none">
+                        Live Reports
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/conversions" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                       class="menu-header-link inline-flex items-center justify-center rounded-md transition-all font-medium text-white dark:text-white hover:text-[#f37a37] px-3 py-2 focus:outline-none">
+                        Conversions
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/performs" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                       class="menu-header-link inline-flex items-center justify-center rounded-md transition-all font-medium text-white dark:text-white hover:text-[#f37a37] px-3 py-2 focus:outline-none">
+                        Performs
+                    </a>
+                </li>
+            </ul>
+            <!-- Kanan: Logout -->
+            <div class="flex items-center min-w-[60px] justify-end">
                 <a routerLink="/authentication/logout" class="inline-flex items-center justify-center rounded-full transition-all text-black dark:text-white hover:text-primary-500 w-[40px] h-[40px] focus:outline-none">
                     <i class="material-symbols-outlined !text-[22px] md:!text-[24px]">logout</i>
                 </a>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </div>

@@ -28,15 +28,31 @@ export class RecentOrdersComponent implements OnInit {
 
     loadConversions() {
         this.conversionsService.getAllConversions().subscribe(data => {
-            // Filter hanya data hari ini (UTC 0)
-            const today = new Date();
-            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
-            const todayStr = utcToday.toISOString().slice(0, 10);
+            // Hitung batas waktu hari ini berdasarkan jam 07:00 WIB (UTC+7)
+            const now = new Date();
+            // Konversi ke WIB (UTC+7)
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const wibNow = new Date(utc + (7 * 60 * 60000));
+
+            // Tentukan batas bawah (start) dan atas (end) untuk hari ini (07:00 WIB hari ini sampai 06:59 WIB besok)
+            let startWIB = new Date(wibNow);
+            startWIB.setHours(7, 0, 0, 0); // jam 07:00 WIB hari ini
+            let endWIB = new Date(startWIB);
+            endWIB.setDate(startWIB.getDate() + 1); // jam 07:00 WIB besok
+
+            // Jika sekarang sebelum jam 07:00 WIB, berarti masih masuk hari kemarin
+            if (wibNow < startWIB) {
+                // Mundurkan 1 hari
+                startWIB.setDate(startWIB.getDate() - 1);
+                endWIB.setDate(endWIB.getDate() - 1);
+            }
+
+            // Filter data yang masuk di antara startWIB dan endWIB (pakai waktu UTC dari item.time)
             const filtered = (data || []).filter(item => {
                 if (!item.time) return false;
-                // Ambil tanggal UTC dari item.time
-                const itemDateStr = item.time.slice(0, 10);
-                return itemDateStr === todayStr;
+                // item.time format: 'YYYY-MM-DD HH:mm:ss' (diasumsikan UTC)
+                const itemDate = new Date(item.time.replace(' ', 'T') + 'Z');
+                return itemDate >= startWIB && itemDate < endWIB;
             });
             this.conversions = filtered.slice(0, 20);
             this.updateTotalEarningToday();
@@ -60,5 +76,21 @@ export class RecentOrdersComponent implements OnInit {
         if (!target.closest('.trezo-card-dropdown')) {
             this.isCardHeaderOpen = false;
         }
+    }
+
+    // Fungsi utilitas untuk konversi UTC ke WIB
+    toWIB(utcString: string): string {
+        if (!utcString) return '';
+        const utcDate = new Date(utcString.replace(' ', 'T') + 'Z');
+        // Tambah 7 jam
+        const wibDate = new Date(utcDate.getTime() + 7 * 60 * 60 * 1000);
+        // Format YYYY-MM-DD HH:mm:ss WIB
+        const y = wibDate.getFullYear();
+        const m = (wibDate.getMonth() + 1).toString().padStart(2, '0');
+        const d = wibDate.getDate().toString().padStart(2, '0');
+        const h = wibDate.getHours().toString().padStart(2, '0');
+        const min = wibDate.getMinutes().toString().padStart(2, '0');
+        const s = wibDate.getSeconds().toString().padStart(2, '0');
+        return `${y}-${m}-${d} ${h}:${min}:${s} WIB`;
     }
 }

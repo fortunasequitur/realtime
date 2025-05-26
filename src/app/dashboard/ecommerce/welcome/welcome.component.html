@@ -10,26 +10,3 @@
         </div>
     </div>
 </div>
-
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-[18px] mt-[18px]">
-  <!-- Total Revenue -->
-  <div class="bg-white border border-gray-200 rounded-lg p-[18px] flex flex-col items-center shadow-sm">
-    <span class="text-xs mb-[2px] tracking-wide font-bold" style="color:#040000">Total Revenue</span>
-    <span class="text-[13px] mb-[8px] font-bold" style="color:#040000">This Month</span>
-    <span class="text-3xl font-bold" style="color:#040000">
-      ${{ totalRevenueThisMonth ? totalRevenueThisMonth.toFixed(2) : '0' }}
-    </span>
-  </div>
-  <!-- Total Conversions -->
-  <div class="bg-white border border-gray-200 rounded-lg p-[18px] flex flex-col items-center shadow-sm">
-    <span class="text-xs mb-[2px] tracking-wide font-bold" style="color:#040000">Total Conversions</span>
-    <span class="text-[13px] mb-[8px] font-bold" style="color:#040000">This Month</span>
-    <span class="text-3xl font-bold" style="color:#040000">{{ totalConversionsThisMonth || 0 }}</span>
-  </div>
-  <!-- Total SUB ID -->
-  <div class="bg-white border border-gray-200 rounded-lg p-[18px] flex flex-col items-center shadow-sm">
-    <span class="text-xs mb-[2px] tracking-wide font-bold" style="color:#040000">Total SUB ID</span>
-    <span class="text-[13px] mb-[8px] font-bold" style="color:#040000">Member</span>
-    <span class="text-3xl font-bold" style="color:#040000">{{ totalUniqueSubIdThisMonth || 0 }}</span>
-  </div>
-</div>

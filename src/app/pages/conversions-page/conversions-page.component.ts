@@ -78,40 +78,69 @@ export class ConversionsPageComponent {
 
     applyDateFilter() {
         // Filter by selectedDateFilter or custom date
-        let start = '';
-        let end = '';
-        const today = new Date();
+        let start: Date | null = null;
+        let end: Date | null = null;
+        const now = new Date();
+        // Konversi ke WIB (UTC+7)
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+        const wibNow = new Date(utc + (7 * 60 * 60000));
+
         if (this.selectedDateFilter === 'today') {
-            // UTC+0
-            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
-            start = end = utcToday.toISOString().slice(0, 10);
+            // Batas bawah: jam 07:00 WIB hari ini
+            start = new Date(wibNow);
+            start.setHours(7, 0, 0, 0);
+            end = new Date(start);
+            end.setDate(start.getDate() + 1);
+            // Jika sekarang sebelum jam 07:00 WIB, berarti masih hari kemarin
+            if (wibNow < start) {
+                start.setDate(start.getDate() - 1);
+                end.setDate(end.getDate() - 1);
+            }
         } else if (this.selectedDateFilter === 'yesterday') {
-            const utcYesterday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1));
-            start = end = utcYesterday.toISOString().slice(0, 10);
-        } else if (this.selectedDateFilter === 'last7') {
-            const utcLast7 = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 6));
-            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
-            start = utcLast7.toISOString().slice(0, 10);
-            end = utcToday.toISOString().slice(0, 10);
-        } else if (this.selectedDateFilter === 'thisMonth') {
-            const first = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1));
-            const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
-            start = first.toISOString().slice(0, 10);
-            end = utcToday.toISOString().slice(0, 10);
-        } else if (this.selectedDateFilter === 'lastMonth') {
-            const first = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1));
-            const last = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 0));
-            start = first.toISOString().slice(0, 10);
-            end = last.toISOString().slice(0, 10);
+            // Batas bawah: jam 07:00 WIB kemarin
+            start = new Date(wibNow);
+            start.setHours(7, 0, 0, 0);
+            start.setDate(start.getDate() - 1);
+            end = new Date(start);
+            end.setDate(start.getDate() + 1);
         }
+        let filtered = this.conversions;
         if (start && end) {
-            this.filteredConversions = this.conversions.filter(item => {
-                const t = item.time ? item.time.slice(0, 10) : '';
-                return t >= start && t <= end;
+            filtered = this.conversions.filter(item => {
+                if (!item.time) return false;
+                // item.time diasumsikan UTC
+                const itemDate = new Date(item.time.replace(' ', 'T') + 'Z');
+                return itemDate >= start! && itemDate < end!;
             });
-        } else {
-            this.filteredConversions = [...this.conversions];
+        } else if (this.selectedDateFilter !== 'today' && this.selectedDateFilter !== 'yesterday') {
+            // Filter lain tetap seperti semula
+            let s = '';
+            let e = '';
+            const today = new Date();
+            if (this.selectedDateFilter === 'last7') {
+                const utcLast7 = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 6));
+                const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+                s = utcLast7.toISOString().slice(0, 10);
+                e = utcToday.toISOString().slice(0, 10);
+            } else if (this.selectedDateFilter === 'thisMonth') {
+                const first = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1));
+                const utcToday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+                s = first.toISOString().slice(0, 10);
+                e = utcToday.toISOString().slice(0, 10);
+            } else if (this.selectedDateFilter === 'lastMonth') {
+                const first = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1));
+                const last = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 0));
+                s = first.toISOString().slice(0, 10);
+                e = last.toISOString().slice(0, 10);
+            }
+            if (s && e) {
+                filtered = this.conversions.filter(item => {
+                    const t = item.time ? item.time.slice(0, 10) : '';
+                    return t >= s && t <= e;
+                });
+            }
         }
+        this.filteredConversions = filtered;
         this.currentPage = 1;
     }
 

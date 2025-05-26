@@ -6,7 +6,8 @@ $network = $_GET['network'] ?? '';
 $subid = $_GET['subid'] ?? '';
 $payout = $_GET['payout'] ?? '';
 $country = $_GET['country'] ?? '';
-$time = date('Y-m-d H:i:s');
+// date_default_timezone_set('Asia/Jakarta'); // HAPUS atau KOMENTARI baris ini jika ada
+$time = gmdate('Y-m-d H:i:s');
 
 if (!$network || !$subid || !$payout || !$country) {
     echo json_encode(['error' => 'Missing parameters.']);

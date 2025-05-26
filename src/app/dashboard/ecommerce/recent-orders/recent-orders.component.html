@@ -25,7 +25,7 @@
                 <tbody class="text-black dark:text-white">
                     <tr *ngFor="let row of conversions">
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
-                            {{ toWIB(row.time) }}
+                            {{ row.time }}
                         </td>
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
                             <img *ngIf="row.country" [src]="'assets/flags/' + (row.country ? row.country.toLowerCase() : '') + '.svg'" class="inline-block mr-2" width="20" height="15" style="display:inline-block;vertical-align:middle;border-radius:2px;" alt="{{row.country}}">{{ row.country }}

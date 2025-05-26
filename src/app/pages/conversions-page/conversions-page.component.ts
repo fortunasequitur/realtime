@@ -215,6 +215,6 @@ export class ConversionsPageComponent {
         if (!date || !time) return rowTime;
         const [year, month, day] = date.split('-');
         if (!year || !month || !day) return rowTime;
-        return `${day}/${month}/${year.slice(2)} - ${time.slice(0,5)}`;
+        return `${year}-${month}-${day} ${time}`;
     }
 } 

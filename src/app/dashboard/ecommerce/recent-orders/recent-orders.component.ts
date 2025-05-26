@@ -77,20 +77,4 @@ export class RecentOrdersComponent implements OnInit {
             this.isCardHeaderOpen = false;
         }
     }
-
-    // Fungsi utilitas untuk konversi UTC ke WIB
-    toWIB(utcString: string): string {
-        if (!utcString) return '';
-        const utcDate = new Date(utcString.replace(' ', 'T') + 'Z');
-        // Tambah 7 jam
-        const wibDate = new Date(utcDate.getTime() + 7 * 60 * 60 * 1000);
-        // Format YYYY-MM-DD HH:mm:ss WIB
-        const y = wibDate.getFullYear();
-        const m = (wibDate.getMonth() + 1).toString().padStart(2, '0');
-        const d = wibDate.getDate().toString().padStart(2, '0');
-        const h = wibDate.getHours().toString().padStart(2, '0');
-        const min = wibDate.getMinutes().toString().padStart(2, '0');
-        const s = wibDate.getSeconds().toString().padStart(2, '0');
-        return `${y}-${m}-${d} ${h}:${min}:${s} WIB`;
-    }
 }

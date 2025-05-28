@@ -18,7 +18,9 @@ $end = $_GET['end'] ?? null;
 // Default: today UTC+0
 if ($filter === 'today') {
     $today = gmdate('Y-m-d');
-    $result = $conn->query("SELECT * FROM conversions WHERE DATE(time) = '$today' ORDER BY time DESC");
+    $start = $today . ' 00:00:00';
+    $end = $today . ' 23:59:59';
+    $result = $conn->query("SELECT * FROM conversions WHERE time BETWEEN '$start' AND '$end' ORDER BY time DESC");
 } elseif ($filter === 'yesterday') {
     $yesterday = gmdate('Y-m-d', strtotime('-1 day'));
     $result = $conn->query("SELECT * FROM conversions WHERE DATE(time) = '$yesterday' ORDER BY time DESC");

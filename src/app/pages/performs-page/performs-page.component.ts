@@ -77,16 +77,11 @@ export class PerformsPageComponent implements OnInit {
         const wibNow = new Date(utc + (7 * 60 * 60000));
 
         if (this.selectedDateFilter === 'today') {
-            // Batas bawah: jam 07:00 WIB hari ini
-            start = new Date(wibNow);
-            start.setHours(7, 0, 0, 0);
-            end = new Date(start);
-            end.setDate(start.getDate() + 1);
-            // Jika sekarang sebelum jam 07:00 WIB, berarti masih hari kemarin
-            if (wibNow < start) {
-                start.setDate(start.getDate() - 1);
-                end.setDate(end.getDate() - 1);
-            }
+            // Batas bawah: jam 00:00 hari ini, batas atas: 23:59:59 hari ini (WIB)
+            start = new Date();
+            start.setHours(0, 0, 0, 0);
+            end = new Date();
+            end.setHours(23, 59, 59, 999);
         } else if (this.selectedDateFilter === 'yesterday') {
             // Batas bawah: jam 07:00 WIB kemarin
             start = new Date(wibNow);

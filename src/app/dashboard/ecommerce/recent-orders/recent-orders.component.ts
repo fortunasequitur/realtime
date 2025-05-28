@@ -28,31 +28,19 @@ export class RecentOrdersComponent implements OnInit {
 
     loadConversions() {
         this.conversionsService.getAllConversions().subscribe(data => {
-            // Hitung batas waktu hari ini berdasarkan jam 07:00 WIB (UTC+7)
+            // Hitung batas waktu hari ini berdasarkan jam 00:00-23:59 WIB (UTC+7)
             const now = new Date();
-            // Konversi ke WIB (UTC+7)
-            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const wibNow = new Date(utc + (7 * 60 * 60000));
-
-            // Tentukan batas bawah (start) dan atas (end) untuk hari ini (07:00 WIB hari ini sampai 06:59 WIB besok)
-            let startWIB = new Date(wibNow);
-            startWIB.setHours(7, 0, 0, 0); // jam 07:00 WIB hari ini
-            let endWIB = new Date(startWIB);
-            endWIB.setDate(startWIB.getDate() + 1); // jam 07:00 WIB besok
-
-            // Jika sekarang sebelum jam 07:00 WIB, berarti masih masuk hari kemarin
-            if (wibNow < startWIB) {
-                // Mundurkan 1 hari
-                startWIB.setDate(startWIB.getDate() - 1);
-                endWIB.setDate(endWIB.getDate() - 1);
-            }
+            let startWIB = new Date();
+            startWIB.setHours(0, 0, 0, 0);
+            let endWIB = new Date();
+            endWIB.setHours(23, 59, 59, 999);
 
             // Filter data yang masuk di antara startWIB dan endWIB (pakai waktu UTC dari item.time)
             const filtered = (data || []).filter(item => {
                 if (!item.time) return false;
                 // item.time format: 'YYYY-MM-DD HH:mm:ss' (diasumsikan UTC)
                 const itemDate = new Date(item.time.replace(' ', 'T') + 'Z');
-                return itemDate >= startWIB && itemDate < endWIB;
+                return itemDate >= startWIB && itemDate <= endWIB;
             });
             this.conversions = filtered.slice(0, 20);
             this.updateTotalEarningToday();

@@ -61,10 +61,17 @@ export class PerformsPageComponent implements OnInit {
     }
 
     loadConversions() {
-        this.conversionsService.getAllConversions().subscribe(data => {
-            this.conversions = data || [];
-            this.applyDateFilter();
-        });
+        if (this.selectedDateFilter === 'custom' && this.customDateStart && this.customDateEnd) {
+            this.conversionsService.getAllConversions('custom', this.customDateStart, this.customDateEnd).subscribe(data => {
+                this.conversions = data || [];
+                this.applyDateFilter();
+            });
+        } else {
+            this.conversionsService.getAllConversions(this.selectedDateFilter).subscribe(data => {
+                this.conversions = data || [];
+                this.applyDateFilter();
+            });
+        }
     }
 
     applyDateFilter() {
@@ -142,7 +149,7 @@ export class PerformsPageComponent implements OnInit {
     selectDateFilter(value: string) {
         this.selectedDateFilter = value;
         this.isDropdownOpen = false;
-        this.applyDateFilter();
+        this.loadConversions();
     }
 
     getDateFilterLabel(value: string, customDate: string | null): string {
@@ -157,29 +164,8 @@ export class PerformsPageComponent implements OnInit {
 
     onLoadDateRange() {
         if (this.customDateStart && this.customDateEnd) {
-            this.isLoading = true;
-            setTimeout(() => {
-                let filtered = this.conversions.filter(item => {
-                    const t = item.time ? item.time.slice(0, 10) : '';
-                    return t >= this.customDateStart! && t <= this.customDateEnd!;
-                });
-                // Group by subid
-                const stats: { [key: string]: { subid: string, totalConversions: number, totalEarnings: number } } = {};
-                for (const conv of filtered) {
-                    const subid = conv.subid || '-';
-                    const payout = parseFloat(conv.payout || 0);
-                    if (!stats[subid]) {
-                        stats[subid] = { subid, totalConversions: 0, totalEarnings: 0 };
-                    }
-                    stats[subid].totalConversions += 1;
-                    stats[subid].totalEarnings += payout;
-                }
-                this.performsData = Object.values(stats);
-                this.currentPage = 1;
-                this.isLoading = false;
-            }, 1000);
-        } else {
-            this.applyDateFilter();
+            this.selectedDateFilter = 'custom';
+            this.loadConversions();
         }
     }
 

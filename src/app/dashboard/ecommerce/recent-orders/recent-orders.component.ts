@@ -27,20 +27,9 @@ export class RecentOrdersComponent implements OnInit {
     }
 
     loadConversions() {
-        this.conversionsService.getAllConversions().subscribe(data => {
-            // Hitung batas waktu hari ini berdasarkan jam 00:00-23:59 UTC
-            const today = new Date();
-            let startUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0));
-            let endUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999));
-
-            // Filter data yang masuk di antara startUTC dan endUTC (pakai waktu UTC dari item.time)
-            const filtered = (data || []).filter(item => {
-                if (!item.time) return false;
-                // item.time format: 'YYYY-MM-DD HH:mm:ss' (diasumsikan UTC)
-                const itemDate = new Date(item.time.replace(' ', 'T') + 'Z');
-                return itemDate >= startUTC && itemDate <= endUTC;
-            });
-            this.conversions = filtered.slice(0, 20);
+        this.conversionsService.getAllConversions('today').subscribe(data => {
+            // Data sudah difilter UTC+0 dari backend
+            this.conversions = (data || []).slice(0, 20);
             this.updateTotalEarningToday();
         });
     }

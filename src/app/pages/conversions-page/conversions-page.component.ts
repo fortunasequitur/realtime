@@ -70,10 +70,21 @@ export class ConversionsPageComponent {
     }
 
     ngOnInit() {
-        this.conversionsService.getAllConversions().subscribe(data => {
-            this.conversions = data;
-            this.applyDateFilter();
-        });
+        this.loadConversions();
+    }
+
+    loadConversions() {
+        if (this.selectedDateFilter === 'custom' && this.customDateStart && this.customDateEnd) {
+            this.conversionsService.getAllConversions('custom', this.customDateStart, this.customDateEnd).subscribe(data => {
+                this.conversions = data;
+                this.applyDateFilter();
+            });
+        } else {
+            this.conversionsService.getAllConversions(this.selectedDateFilter).subscribe(data => {
+                this.conversions = data;
+                this.applyDateFilter();
+            });
+        }
     }
 
     applyDateFilter() {
@@ -140,7 +151,7 @@ export class ConversionsPageComponent {
     selectDateFilter(value: string) {
         this.selectedDateFilter = value;
         this.isDropdownOpen = false;
-        this.applyDateFilter();
+        this.loadConversions();
     }
 
     getDateFilterLabel(value: string, customDate: string | null): string {
@@ -155,18 +166,8 @@ export class ConversionsPageComponent {
 
     onLoadDateRange() {
         if (this.customDateStart && this.customDateEnd) {
-            this.isLoading = true;
-            setTimeout(() => {
-                this.filteredConversions = this.conversions.filter(item => {
-                    const t = item.time ? item.time.slice(0, 10) : '';
-                    return t >= this.customDateStart! && t <= this.customDateEnd!;
-                });
-                this.currentPage = 1;
-                this.isLoading = false;
-            }, 1000);
-        } else {
-            this.filteredConversions = [...this.conversions];
-            this.currentPage = 1;
+            this.selectedDateFilter = 'custom';
+            this.loadConversions();
         }
     }
 

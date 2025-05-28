@@ -77,18 +77,16 @@ export class PerformsPageComponent implements OnInit {
         const wibNow = new Date(utc + (7 * 60 * 60000));
 
         if (this.selectedDateFilter === 'today') {
-            // Batas bawah: jam 00:00 hari ini, batas atas: 23:59:59 hari ini (WIB)
-            start = new Date();
-            start.setHours(0, 0, 0, 0);
-            end = new Date();
-            end.setHours(23, 59, 59, 999);
+            // Batas bawah: jam 00:00 hari ini UTC, batas atas: 23:59:59 hari ini UTC
+            const today = new Date();
+            start = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0));
+            end = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999));
         } else if (this.selectedDateFilter === 'yesterday') {
-            // Batas bawah: jam 07:00 WIB kemarin
-            start = new Date(wibNow);
-            start.setHours(7, 0, 0, 0);
-            start.setDate(start.getDate() - 1);
-            end = new Date(start);
-            end.setDate(start.getDate() + 1);
+            // Batas bawah: jam 00:00 kemarin UTC, batas atas: 23:59:59 kemarin UTC
+            const today = new Date();
+            const yesterday = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() - 1, 0, 0, 0, 0));
+            start = yesterday;
+            end = new Date(Date.UTC(yesterday.getUTCFullYear(), yesterday.getUTCMonth(), yesterday.getUTCDate(), 23, 59, 59, 999));
         }
         let filtered = this.conversions;
         if (start && end) {

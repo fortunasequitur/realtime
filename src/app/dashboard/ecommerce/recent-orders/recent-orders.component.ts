@@ -28,19 +28,17 @@ export class RecentOrdersComponent implements OnInit {
 
     loadConversions() {
         this.conversionsService.getAllConversions().subscribe(data => {
-            // Hitung batas waktu hari ini berdasarkan jam 00:00-23:59 WIB (UTC+7)
-            const now = new Date();
-            let startWIB = new Date();
-            startWIB.setHours(0, 0, 0, 0);
-            let endWIB = new Date();
-            endWIB.setHours(23, 59, 59, 999);
+            // Hitung batas waktu hari ini berdasarkan jam 00:00-23:59 UTC
+            const today = new Date();
+            let startUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0));
+            let endUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999));
 
-            // Filter data yang masuk di antara startWIB dan endWIB (pakai waktu UTC dari item.time)
+            // Filter data yang masuk di antara startUTC dan endUTC (pakai waktu UTC dari item.time)
             const filtered = (data || []).filter(item => {
                 if (!item.time) return false;
                 // item.time format: 'YYYY-MM-DD HH:mm:ss' (diasumsikan UTC)
                 const itemDate = new Date(item.time.replace(' ', 'T') + 'Z');
-                return itemDate >= startWIB && itemDate <= endWIB;
+                return itemDate >= startUTC && itemDate <= endUTC;
             });
             this.conversions = filtered.slice(0, 20);
             this.updateTotalEarningToday();

@@ -9,6 +9,8 @@ $conn = new mysqli('localhost', 'sobf5627_gilang', '@Gilang123', 'sobf5627_realt
 if ($conn->connect_error) {
     die(json_encode(['error' => 'Database connection failed', 'detail' => $conn->connect_error]));
 }
+// Set timezone ke UTC
+$conn->query("SET time_zone = '+00:00'");
 
 // Insert klik
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

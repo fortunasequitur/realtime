@@ -8,6 +8,9 @@ if ($conn->connect_error) {
     exit;
 }
 
+// Set timezone ke UTC
+$conn->query("SET time_zone = '+00:00'");
+
 $result = $conn->query("SELECT * FROM conversions ORDER BY time DESC LIMIT 100");
 $rows = [];
 while ($row = $result->fetch_assoc()) {

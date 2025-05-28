@@ -20,6 +20,9 @@ if ($conn->connect_error) {
     exit;
 }
 
+// Set timezone ke UTC
+$conn->query("SET time_zone = '+00:00'");
+
 $stmt = $conn->prepare("INSERT INTO conversions (network, subid, payout, country, time) VALUES (?, ?, ?, ?, ?)");
 $stmt->bind_param("ssdss", $network, $subid, $payout, $country, $time);
 

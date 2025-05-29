@@ -24,6 +24,30 @@ export class RecentOrdersComponent implements OnInit {
         setInterval(() => {
             this.loadConversions();
         }, 5000); // refresh setiap 5 detik
+
+        // Live waktu UTC dan WIB
+        setInterval(() => {
+            const now = new Date();
+            // UTC
+            const utcStr = now.getUTCFullYear() + '-' +
+                String(now.getUTCMonth() + 1).padStart(2, '0') + '-' +
+                String(now.getUTCDate()).padStart(2, '0') + ' ' +
+                String(now.getUTCHours()).padStart(2, '0') + ':' +
+                String(now.getUTCMinutes()).padStart(2, '0') + ':' +
+                String(now.getUTCSeconds()).padStart(2, '0');
+            // WIB (UTC+7)
+            const wib = new Date(now.getTime() + 7 * 60 * 60 * 1000);
+            const wibStr = wib.getUTCFullYear() + '-' +
+                String(wib.getUTCMonth() + 1).padStart(2, '0') + '-' +
+                String(wib.getUTCDate()).padStart(2, '0') + ' ' +
+                String(wib.getUTCHours()).padStart(2, '0') + ':' +
+                String(wib.getUTCMinutes()).padStart(2, '0') + ':' +
+                String(wib.getUTCSeconds()).padStart(2, '0');
+            const utcElem = document.getElementById('live-utc-time');
+            const wibElem = document.getElementById('live-wib-time');
+            if (utcElem) utcElem.textContent = utcStr + ' UTC';
+            if (wibElem) wibElem.textContent = wibStr + ' WIB';
+        }, 1000);
     }
 
     loadConversions() {

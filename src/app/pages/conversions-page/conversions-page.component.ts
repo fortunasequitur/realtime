@@ -109,7 +109,10 @@ export class ConversionsPageComponent {
             end = new Date(Date.UTC(yesterday.getUTCFullYear(), yesterday.getUTCMonth(), yesterday.getUTCDate(), 23, 59, 59, 999));
         }
         let filtered = this.conversions;
-        if (start && end) {
+        // Filter custom date satu hari (berlaku untuk semua tanggal)
+        if (this.selectedDateFilter === 'custom' && this.customDateStart && this.customDateEnd && this.customDateStart === this.customDateEnd) {
+            filtered = this.conversions.filter(item => item.time && item.time.slice(0, 10) === this.customDateStart);
+        } else if (start && end) {
             filtered = this.conversions.filter(item => {
                 if (!item.time) return false;
                 // item.time diasumsikan UTC
@@ -117,7 +120,6 @@ export class ConversionsPageComponent {
                 return itemDate >= start! && itemDate < end!;
             });
         } else if (this.selectedDateFilter !== 'today' && this.selectedDateFilter !== 'yesterday') {
-            // Filter lain tetap seperti semula
             let s = '';
             let e = '';
             const today = new Date();

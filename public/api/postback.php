@@ -7,7 +7,10 @@ $subid = $_GET['subid'] ?? '';
 $payout = $_GET['payout'] ?? '';
 $country = $_GET['country'] ?? '';
 // date_default_timezone_set('Asia/Jakarta'); // HAPUS atau KOMENTARI baris ini jika ada
-$time = gmdate('Y-m-d H:i:s');
+// Ambil waktu lokal (WIB) lalu konversi ke UTC+0 dengan menambah 7 jam
+$wib_time = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
+$wib_time->modify('+7 hours');
+$time = $wib_time->format('Y-m-d H:i:s');
 
 if (!$network || !$subid || !$payout || !$country) {
     echo json_encode(['error' => 'Missing parameters.']);

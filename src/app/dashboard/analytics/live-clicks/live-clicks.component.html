@@ -1,7 +1,8 @@
 <div class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
-    <div class="trezo-card-header mb-[20px] md:mb-[25px] sm:flex items-center justify-between">
+    <div class="trezo-card-header mb-[20px] md:mb-[25px] flex items-center justify-between">
         <div class="trezo-card-title">
-            <h5 class="mb-0">
+            <h5 class="mb-0 flex items-center">
+                <img src="assets/lottie/live.gif" alt="Live" style="width:28px; height:28px; margin-right:8px; display:inline-block; vertical-align:middle;" />
                 Live Clicks Today
             </h5>
         </div>
@@ -12,31 +13,38 @@
     <div class="trezo-card-content">
         <div class="table-responsive overflow-x-auto">
             <table class="w-full">
-                <thead>
+                <thead class="bg-gray-50 dark:bg-[#17213a] text-black dark:text-white">
                     <tr>
-                        <th class="font-medium text-xs ltr:text-left rtl:text-right px-[14px] pb-[7px] whitespace-nowrap ltr:first:pl-0 rtl:first:pr-0 ltr:last:pr-0 rtl:last:pl-0">Time</th>
-                        <th class="font-medium text-xs ltr:text-left rtl:text-right px-[14px] pb-[7px] whitespace-nowrap ltr:first:pl-0 rtl:first:pr-0 ltr:last:pr-0 rtl:last:pl-0">SUB ID</th>
-                        <th class="font-medium text-xs ltr:text-left rtl:text-right px-[14px] pb-[7px] whitespace-nowrap ltr:first:pl-0 rtl:first:pr-0 ltr:last:pr-0 rtl:last:pl-0">Country</th>
-                        <th class="font-medium text-xs ltr:text-left rtl:text-right px-[14px] pb-[7px] whitespace-nowrap ltr:first:pl-0 rtl:first:pr-0 ltr:last:pr-0 rtl:last:pl-0">OS</th>
-                        <th class="font-medium text-xs ltr:text-left rtl:text-right px-[14px] pb-[7px] whitespace-nowrap ltr:first:pl-0 rtl:first:pr-0 ltr:last:pr-0 rtl:last:pl-0">IP</th>
-                        <th class="font-medium text-xs ltr:text-left rtl:text-right px-[14px] pb-[7px] whitespace-nowrap ltr:first:pl-0 rtl:first:pr-0 ltr:last:pr-0 rtl:last:pl-0">Ref</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">Time</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">SUB ID</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">Geo</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">OS</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">IP</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">Ref</th>
                     </tr>
                 </thead>
                 <tbody class="text-black dark:text-white">
                     <tr *ngFor="let click of clicks">
-                        <td class="font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap px-[14px] py-[10px] border-b border-gray-100 dark:border-[#172036]">{{ click.time }}</td>
-                        <td class="font-medium whitespace-nowrap px-[14px] py-[10px] border-b border-gray-100 dark:border-[#172036]">{{ click.sub_id }}</td>
-                        <td class="font-medium whitespace-nowrap px-[14px] py-[10px] border-b border-gray-100 dark:border-[#172036] flex items-center gap-2">
-                            <img *ngIf="click.country" [src]="'https://flagcdn.com/16x12/' + (click.country | lowercase) + '.png'" width="20" height="15" style="display:inline-block;vertical-align:middle;border-radius:2px;" alt="{{click.country}}" />
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ click.time }}</td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ click.sub_id }}</td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] flex items-center gap-2">
+                            <img *ngIf="click.country" [src]="'assets/flags/' + (click.country ? click.country.toLowerCase() : '') + '.svg'" class="inline-block mr-2" width="20" height="15" style="display:inline-block;vertical-align:middle;border-radius:2px;" alt="{{click.country}}" />
                             <span>{{ click.country }}</span>
                         </td>
-                        <td class="font-medium whitespace-nowrap px-[14px] py-[10px] border-b border-gray-100 dark:border-[#172036]">{{ click.os }}</td>
-                        <td class="font-medium whitespace-nowrap px-[14px] py-[10px] border-b border-gray-100 dark:border-[#172036]">{{ click.ip }}</td>
-                        <td class="font-medium whitespace-nowrap px-[14px] py-[10px] border-b border-gray-100 dark:border-[#172036]">{{ click.referer }}</td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
+                            <img *ngIf="click.osIcon" [src]="click.osIcon" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="{{click.os}}" />
+                        </td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ click.ip }}</td>
+                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
+                            <img *ngIf="click.refIcon" [src]="click.refIcon" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="ref" />
+                            <span *ngIf="!click.refIcon">{{ click.referer }}</span>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!clicks.length">
+                        <td colspan="6" class="text-center py-4">Belum ada data klik.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div *ngIf="!clicks.length" class="text-center text-gray-400 py-4">Belum ada data klik.</div>
     </div>
 </div> 

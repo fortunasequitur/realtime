@@ -30,14 +30,19 @@ export class LiveClicksComponent implements OnInit {
         this.clicks = data
           .filter(click => (click.org || '').indexOf('AS32934') === -1)
           .slice(0, 10)
-          .map(click => ({
-            time: click.timestamp ? click.timestamp.split(' ')[1] : '',
-            sub_id: click.subsource,
-            country: click.country,
-            os: this.getOSFromUserAgent(click.user_agent),
-            ip: click.ip,
-            referer: click.referer
-          }));
+          .map(click => {
+            const os = this.getOSFromUserAgent(click.user_agent);
+            return {
+              time: click.timestamp ? click.timestamp.split(' ')[1] : '',
+              sub_id: click.subsource,
+              country: click.country,
+              os,
+              osIcon: this.getOSIcon(os),
+              ip: click.ip,
+              referer: click.referer,
+              refIcon: this.getRefIcon(click.referer)
+            };
+          });
       });
       this.checkDarkMode();
       const observer = new MutationObserver(() => this.checkDarkMode());
@@ -58,5 +63,24 @@ export class LiveClicksComponent implements OnInit {
     if (ua.includes('windows')) return 'windows';
     if (ua.includes('mac')) return 'mac';
     return 'other';
+  }
+
+  getOSIcon(os: string): string {
+    switch (os) {
+      case 'android': return 'assets/images/android.svg';
+      case 'ios': return 'assets/images/apple.svg';
+      case 'windows': return 'assets/images/window.svg';
+      case 'mac': return 'assets/images/mac.svg';
+      default: return '';
+    }
+  }
+
+  getRefIcon(ref: string): string {
+    if (!ref) return '';
+    const refLower = ref.toLowerCase();
+    if (refLower.includes('facebook')) return 'assets/images/socials/facebook.svg';
+    if (refLower.includes('instagram') || refLower.includes('ig.')) return 'assets/images/socials/instagram.svg';
+    if (refLower.includes('threads')) return 'assets/images/socials/threads.svg';
+    return '';
   }
 } 

@@ -28,8 +28,12 @@ export class RecentOrdersComponent implements OnInit {
 
     loadConversions() {
         this.conversionsService.getAllConversions('today').subscribe(data => {
-            // Data sudah difilter UTC+0 dari backend
-            this.conversions = (data || []).slice(0, 20);
+            // Filter di frontend: hanya data dengan tanggal hari ini UTC
+            const todayUtc = new Date();
+            const todayStr = todayUtc.toISOString().slice(0, 10); // 'YYYY-MM-DD'
+            this.conversions = (data || [])
+                .filter(item => item.time && item.time.slice(0, 10) === todayStr)
+                .slice(0, 20);
             this.updateTotalEarningToday();
         });
     }

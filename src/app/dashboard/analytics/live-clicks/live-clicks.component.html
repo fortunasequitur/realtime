@@ -27,9 +27,11 @@
                     <tr *ngFor="let click of clicks">
                         <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">{{ click.time }}</td>
                         <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">{{ click.sub_id }}</td>
-                        <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036] flex items-center gap-2">
-                            <img *ngIf="click.country" [src]="'assets/flags/' + (click.country ? click.country.toLowerCase() : '') + '.svg'" class="inline-block mr-2" width="20" height="15" style="display:inline-block;vertical-align:middle;border-radius:2px;" alt="{{click.country}}" />
-                            <span>{{ click.country }}</span>
+                        <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">
+                          <span class="flex items-center gap-2">
+                            <img *ngIf="click.country" [src]="'assets/flags/' + (click.country ? click.country.toLowerCase() : '') + '.svg'" class="inline-block" width="20" height="18" style="display:inline-block;vertical-align:middle;border-radius:2px;" alt="{{click.country}}" />
+                            <span style="font-size:16px;line-height:18px;display:inline-block;">{{ click.country }}</span>
+                          </span>
                         </td>
                         <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">
                             <img *ngIf="click.os === 'android'" src="assets/images/android.svg" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="android" />

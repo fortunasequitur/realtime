@@ -96,7 +96,10 @@ export class PerformsPageComponent implements OnInit {
             end = new Date(Date.UTC(yesterday.getUTCFullYear(), yesterday.getUTCMonth(), yesterday.getUTCDate(), 23, 59, 59, 999));
         }
         let filtered = this.conversions;
-        if (start && end) {
+        // Tambahan filter custom date satu hari
+        if (this.selectedDateFilter === 'custom' && this.customDateStart && this.customDateEnd && this.customDateStart === this.customDateEnd) {
+            filtered = this.conversions.filter(item => item.time && item.time.slice(0, 10) === this.customDateStart);
+        } else if (start && end) {
             filtered = this.conversions.filter(item => {
                 if (!item.time) return false;
                 // item.time diasumsikan UTC

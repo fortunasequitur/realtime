@@ -12,34 +12,34 @@
     </div>
     <div class="trezo-card-content">
         <div class="table-responsive overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full table-fixed">
                 <thead class="bg-gray-50 dark:bg-[#17213a] text-black dark:text-white">
                     <tr>
-                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">Time</th>
-                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">SUB ID</th>
-                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">Geo</th>
-                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">OS</th>
-                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">IP</th>
-                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px]">Ref</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">Time</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">SUB ID</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">Geo</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">OS</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">IP</th>
+                        <th class="font-bold ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">Ref</th>
                     </tr>
                 </thead>
                 <tbody class="text-black dark:text-white">
                     <tr *ngFor="let click of clicks">
-                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ click.time }}</td>
-                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ click.sub_id }}</td>
-                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] flex items-center gap-2">
+                        <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">{{ click.time }}</td>
+                        <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">{{ click.sub_id }}</td>
+                        <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036] flex items-center gap-2">
                             <img *ngIf="click.country" [src]="'assets/flags/' + (click.country ? click.country.toLowerCase() : '') + '.svg'" class="inline-block mr-2" width="20" height="15" style="display:inline-block;vertical-align:middle;border-radius:2px;" alt="{{click.country}}" />
                             <span>{{ click.country }}</span>
                         </td>
-                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
+                        <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">
                             <img *ngIf="click.os === 'android'" src="assets/images/android.svg" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="android" />
                             <img *ngIf="click.os === 'ios'" src="assets/images/apple.svg" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="ios" />
                             <img *ngIf="click.os === 'mac'" src="assets/images/mac.svg" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="mac" />
                             <img *ngIf="click.os === 'windows'" src="assets/images/window.svg" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="windows" />
                             <i *ngIf="click.os === 'unknown'" class="fas fa-question text-gray-500 text-2xl"></i>
                         </td>
-                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ click.ip }}</td>
-                        <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
+                        <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">{{ click.ip }}</td>
+                        <td class="ltr:text-left rtl:text-right px-[20px] py-[11px] border-b border-gray-100 dark:border-[#172036]">
                             <img *ngIf="click.refIcon" [src]="click.refIcon" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="ref" />
                             <span *ngIf="!click.refIcon">{{ click.referer }}</span>
                         </td>

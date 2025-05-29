@@ -35,6 +35,7 @@
                             <i *ngIf="click.os === 'android'" class="fab fa-android text-green-500 text-2xl"></i>
                             <i *ngIf="click.os === 'ios' || click.os === 'mac'" class="fab fa-apple text-white text-2xl"></i>
                             <i *ngIf="click.os === 'windows'" class="fab fa-windows text-blue-500 text-2xl"></i>
+                            <i *ngIf="click.os === 'unknown'" class="fas fa-question text-gray-500 text-2xl"></i>
                         </td>
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ click.ip }}</td>
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">

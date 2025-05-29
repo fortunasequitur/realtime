@@ -56,13 +56,15 @@ export class LiveClicksComponent implements OnInit {
   }
 
   getOSFromUserAgent(userAgent: string): string {
-    if (!userAgent) return 'other';
+    if (!userAgent) return 'unknown';
     const ua = userAgent.toLowerCase();
     if (ua.includes('android')) return 'android';
     if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ios')) return 'ios';
     if (ua.includes('windows')) return 'windows';
     if (ua.includes('mac')) return 'mac';
-    return 'other';
+    // Fallback log
+    console.log('UA not detected:', userAgent);
+    return 'unknown';
   }
 
   getOSIcon(os: string): string {

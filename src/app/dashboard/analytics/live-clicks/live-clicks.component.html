@@ -32,9 +32,10 @@
                             <span>{{ click.country }}</span>
                         </td>
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
-                            <i *ngIf="click.os === 'android'" class="fab fa-android text-green-500 text-2xl"></i>
-                            <i *ngIf="click.os === 'ios' || click.os === 'mac'" class="fab fa-apple text-white text-2xl"></i>
-                            <i *ngIf="click.os === 'windows'" class="fab fa-windows text-blue-500 text-2xl"></i>
+                            <img *ngIf="click.os === 'android'" src="assets/images/android.svg" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="android" />
+                            <img *ngIf="click.os === 'ios'" src="assets/images/apple.svg" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="ios" />
+                            <img *ngIf="click.os === 'mac'" src="assets/images/mac.svg" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="mac" />
+                            <img *ngIf="click.os === 'windows'" src="assets/images/window.svg" width="20" height="20" style="display:inline-block;vertical-align:middle;" alt="windows" />
                             <i *ngIf="click.os === 'unknown'" class="fas fa-question text-gray-500 text-2xl"></i>
                         </td>
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ click.ip }}</td>

@@ -79,7 +79,7 @@
                 <tbody class="text-black dark:text-white">
                     <tr *ngFor="let row of paginatedConversions">
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">
-                            {{ formatTime(row.time) }}
+                            {{ formatTime(row.time_utc) }}
                         </td>
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">{{ row.subid }}</td>
                         <td class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036]">

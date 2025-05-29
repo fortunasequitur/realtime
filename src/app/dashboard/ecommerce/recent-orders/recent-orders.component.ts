@@ -52,4 +52,10 @@ export class RecentOrdersComponent implements OnInit {
             this.isCardHeaderOpen = false;
         }
     }
+
+    // Tambahkan fungsi ini
+    formatUtcTime(utcString: string): string {
+        // Tambahkan label UTC agar user tahu ini waktu UTC
+        return utcString + ' UTC';
+    }
 }

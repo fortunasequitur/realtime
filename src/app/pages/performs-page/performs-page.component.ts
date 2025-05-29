@@ -96,7 +96,7 @@ export class PerformsPageComponent implements OnInit {
             end = new Date(Date.UTC(yesterday.getUTCFullYear(), yesterday.getUTCMonth(), yesterday.getUTCDate(), 23, 59, 59, 999));
         }
         let filtered = this.conversions;
-        // Tambahan filter custom date satu hari
+        // Filter custom date satu hari (berlaku untuk semua tanggal)
         if (this.selectedDateFilter === 'custom' && this.customDateStart && this.customDateEnd && this.customDateStart === this.customDateEnd) {
             filtered = this.conversions.filter(item => item.time && item.time.slice(0, 10) === this.customDateStart);
         } else if (start && end) {
@@ -107,7 +107,6 @@ export class PerformsPageComponent implements OnInit {
                 return itemDate >= start! && itemDate < end!;
             });
         } else if (this.selectedDateFilter !== 'today' && this.selectedDateFilter !== 'yesterday') {
-            // Filter lain tetap seperti semula
             let s = '';
             let e = '';
             const today = new Date();
@@ -134,7 +133,7 @@ export class PerformsPageComponent implements OnInit {
                 });
             }
         }
-        // Group by subid
+        // Group by subid hanya pada hasil filtered
         const stats: { [key: string]: { subid: string, totalConversions: number, totalEarnings: number } } = {};
         for (const conv of filtered) {
             const subid = conv.subid || '-';

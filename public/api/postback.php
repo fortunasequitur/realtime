@@ -6,12 +6,8 @@ $network = $_GET['network'] ?? '';
 $subid = $_GET['subid'] ?? '';
 $payout = $_GET['payout'] ?? '';
 $country = $_GET['country'] ?? '';
-// date_default_timezone_set('Asia/Jakarta'); // HAPUS atau KOMENTARI baris ini jika ada
-// Ambil waktu lokal (WIB)
-$wib_time = new DateTime('now', new DateTimeZone('Asia/Jakarta'));
-// Konversi ke UTC dengan mengurangi 7 jam
-$wib_time->modify('-7 hours');
-$time = $wib_time->format('Y-m-d H:i:s');
+// Ambil waktu UTC server
+$time = gmdate('Y-m-d H:i:s');
 
 if (!$network || !$subid || !$payout || !$country) {
     echo json_encode(['error' => 'Missing parameters.']);

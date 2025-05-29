@@ -23,31 +23,29 @@ export class LiveClicksComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isBrowser) {
-      interval(5000).pipe(
-        switchMap(() => this.http.get<any[]>('https://sobatdigital.online/api/visits_json.php'))
-      ).subscribe(data => {
-        this.clicks = data
-          .filter(click => (click.org || '').indexOf('AS32934') === -1)
-          .slice(0, 10)
-          .map(click => {
-            const os = this.getOSFromUserAgent(click.user_agent);
-            return {
-              time: click.timestamp ? click.timestamp.split(' ')[1] : '',
-              sub_id: click.subsource,
-              country: click.country,
-              os,
-              osIcon: this.getOSIcon(os),
-              ip: click.ip,
-              referer: click.referer,
-              refIcon: this.getRefIcon(click.referer)
-            };
-          });
-      });
-      this.checkDarkMode();
-      const observer = new MutationObserver(() => this.checkDarkMode());
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    }
+    interval(5000).pipe(
+      switchMap(() => this.http.get<any[]>('https://sobatdigital.online/api/visits_json.php'))
+    ).subscribe(data => {
+      this.clicks = data
+        .filter(click => (click.org || '').indexOf('AS32934') === -1)
+        .slice(0, 10)
+        .map(click => {
+          const os = this.getOSFromUserAgent(click.user_agent);
+          return {
+            time: click.timestamp ? click.timestamp.split(' ')[1] : '',
+            sub_id: click.subsource,
+            country: click.country,
+            os,
+            osIcon: this.getOSIcon(os),
+            ip: click.ip,
+            referer: click.referer,
+            refIcon: this.getRefIcon(click.referer)
+          };
+        });
+    });
+    this.checkDarkMode();
+    const observer = new MutationObserver(() => this.checkDarkMode());
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   }
 
   checkDarkMode() {
